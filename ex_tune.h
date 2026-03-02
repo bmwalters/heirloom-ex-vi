@@ -117,7 +117,7 @@
 #ifdef	_POSIX_PATH_MAX
 #define	FNSIZE		_POSIX_PATH_MAX
 #else
-#define	FNSIZE		128		/* File name size */
+#define	FNSIZE		2048		/* File name size */
 #endif
 #ifdef VMUNIX
 #ifndef	ESIZE	/* see config.h */
