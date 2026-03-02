@@ -1213,6 +1213,8 @@ grow(char *msg, char **tolb0, char **tolb1, char **togb0, char **togb1)
 	linebuf = nlb;
 	genbuf = ngb;
 	LBSIZE += 4096;
+	if (inopen)
+		growatube();
 }
 
 void *

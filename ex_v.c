@@ -497,6 +497,35 @@ vok(register cell *atube)
 	vSCROLL = value(SCROLL);
 }
 
+/*
+ * Grow the atube buffer when LBSIZE increases.
+ * The atube buffer holds both screen data and vutmp (undo buffer).
+ * When LBSIZE grows, we must reallocate to ensure vutmp has enough space.
+ */
+void
+growatube(void)
+{
+	cell *oatube, *nat;
+	int i;
+	long celloff;
+
+	oatube = atube;
+	nat = realloc(atube, (TUBESIZE + LBSIZE) * sizeof *atube);
+	if (nat == NULL)
+		error("Screen buffer overflow");
+	atube = nat;
+	if (nat != oatube) {
+		/* Buffer moved; update all pointers into it */
+		celloff = nat - oatube;
+		vtube0 += celloff;
+		for (i = ZERO; i <= WECHO; i++)
+			if (vtube[i] != NULL)
+				vtube[i] += celloff;
+		/* vutmp is char* but points into cell array */
+		vutmp = (char *)((cell *)vutmp + celloff);
+	}
+}
+
 void 
 vintr(int signum)
 {

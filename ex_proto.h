@@ -392,6 +392,7 @@ extern void savevis(void);
 extern void undvis(void);
 extern void setwind(void);
 extern void vok(register cell *);
+extern void growatube(void);
 extern void vintr(int);
 extern void vsetsiz(int);
 extern void onwinch(int);
