@@ -475,6 +475,8 @@ vdelete(int c)
 	i = vdcMID();
 	cp = cursor;
 	setDEL();
+	if ((DEL[0] & (QUOTE|TRIM)) == OVERBUF)
+		beep();
 	CP(cp, wcursor);
 	if (cp > linebuf && (cp[0] == 0 || c == '#'))
 		cp--;
@@ -692,6 +694,8 @@ smallchange:
 	 */
 	cursor = cp;
 	setDEL();
+	if ((DEL[0] & (QUOTE|TRIM)) == OVERBUF)
+		beep();
 	CP(cursor, wcursor);
 	if (state != HARDOPEN) {
 		vcursaft(cursor - 1);
